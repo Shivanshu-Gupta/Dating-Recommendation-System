@@ -1,0 +1,128 @@
+# This file is a POMDP policy, represented as a set of "lower bound
+# planes", each of which consists of an alpha vector and a corresponding
+# action.  Given a particular belief b, this information can be used to
+# answer two queries of interest:
+#
+#   1. What is a lower bound on the expected long-term reward starting
+#        from belief b?
+#   2. What is an action that achieves that expected reward lower bound?
+#
+# Each lower bound plane is only defined over a subset of the belief
+# simplex--it is defined for those beliefs b such that the non-zero
+# entries of b are a subset of the entries present in the plane's alpha
+# vector.  If this condition holds we say the plane is 'applicable' to b.
+#
+# Given a belief b, both of the queries above can be answered by the
+# following process: first, throw out all the planes that are not
+# applicable to b.  Then, for each of the remaining planes, take the inner
+# product of the plane's alpha vector with b.  The highest inner product
+# value is the expected long-term reward lower bound, and the action label
+# for that plane is the action that achieves the bound.
+
+{
+  policyType => "MaxPlanesLowerBound",
+  numPlanes => 9,
+  planes => [
+    {
+      action => 5,
+      numEntries => 6,
+      entries => [
+        0, -0.00998169,
+        1, -50.01,
+        2, -50.01,
+        3, -50.01,
+        4, -50.01,
+        5, -0.00998169
+      ]
+    },
+    {
+      action => 9,
+      numEntries => 6,
+      entries => [
+        0, -50.01,
+        1, -50.01,
+        2, -50.01,
+        3, -50.01,
+        4, -0.00998169,
+        5, -0.00998169
+      ]
+    },
+    {
+      action => 2,
+      numEntries => 5,
+      entries => [
+        0, -1.21336,
+        1, -50.96,
+        2, -50.96,
+        3, -50.96,
+        4, -43.2669
+      ]
+    },
+    {
+      action => 0,
+      numEntries => 5,
+      entries => [
+        0, -3.44273,
+        1, -51.8656,
+        2, -51.8488,
+        3, -51.8173,
+        4, -35.8659
+      ]
+    },
+    {
+      action => 5,
+      numEntries => 5,
+      entries => [
+        0, -0.00997171,
+        1, -50.01,
+        2, -50.01,
+        3, -50.01,
+        4, -50.01
+      ]
+    },
+    {
+      action => 0,
+      numEntries => 5,
+      entries => [
+        0, -2.27089,
+        1, -50.96,
+        2, -50.96,
+        3, -50.96,
+        4, -41.2993
+      ]
+    },
+    {
+      action => 0,
+      numEntries => 5,
+      entries => [
+        0, -4.47252,
+        1, -51.8656,
+        2, -51.8488,
+        3, -51.8173,
+        4, -34.2804
+      ]
+    },
+    {
+      action => 0,
+      numEntries => 5,
+      entries => [
+        0, -6.61644,
+        1, -52.7288,
+        2, -52.6804,
+        3, -52.5909,
+        4, -28.6247
+      ]
+    },
+    {
+      action => 0,
+      numEntries => 5,
+      entries => [
+        0, -8.70414,
+        1, -53.5517,
+        2, -53.4584,
+        3, -53.289,
+        4, -24.0673
+      ]
+    }
+  ]
+}

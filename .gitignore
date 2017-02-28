@@ -1,0 +1,18 @@
+# Java class files
+*.class
+
+# Python
+.pyc
+
+# built native files
+*.o
+*.so
+
+# Mac OS X clutter
+*.DS_Store
+
+# Windows clutter
+Thumbs.db
+
+# simulation results directory
+/simulation
