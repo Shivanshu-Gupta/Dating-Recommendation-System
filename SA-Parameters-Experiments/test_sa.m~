@@ -1,0 +1,19 @@
+function [ncorr] = test_sa(data, x)
+    m = length(data);
+    ncorr = 0;
+    cmMales = zeros(2);
+    cmFemales = zeros(2);
+    
+    for i = 1:m
+        line = data(i, :);
+        [u1, u2, action, g1, g2] = line(1:5);
+        s = x(u1, 1);
+        a = x(u2, 2);
+        p = logsig(s*a);
+        if (action && p > 0.5) || (~action && p <= 0.5)
+            ncorr = ncorr + 1;
+            if g1
+                cmMales(action + 1, 
+            end
+        end
+    end    
