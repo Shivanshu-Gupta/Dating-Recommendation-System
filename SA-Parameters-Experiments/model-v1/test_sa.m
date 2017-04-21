@@ -1,6 +1,7 @@
 function [ncorr, cmMales, cmFemales] = test_sa(data, x)
     m = length(data);
     ncorr = 0;
+    % confusion matrices - actual in rows and predicted in columns
     cmMales = zeros(2);
     cmFemales = zeros(2);
     

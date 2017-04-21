@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#define minDeg 100
+#define minDeg 200
 
 unordered_set <int> male, female;
 unordered_map<int, int> indeg, outdeg;
@@ -40,6 +40,7 @@ void analyse(string in) {
         else female.insert(u2);
         nActions++;
     }
+
     for(auto pair : indeg) {
         int uid = pair.first;
         if(indeg[uid] > minDeg && outdeg[uid] > minDeg) {

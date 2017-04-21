@@ -1,5 +1,7 @@
-traindata = csvread('data/train.csv');
-testdata = csvread('data/test.csv');
+% Driver code for SA Model v1
+
+traindata = csvread('../data/train.csv');
+testdata = csvread('../data/test.csv');
 m = length(traindata);
 % data format: 
 % 1, 2: user indexes
@@ -14,16 +16,17 @@ users = traindata(ia, [1,4,8]);
 n = length(users);
 
 % initialize parameters
-x0 = initParams(traindata, n);
+x0 = initParams(traindata, n, 2);
 
 % optimize parameters
 options = optimoptions('fminunc','Algorithm','trust-region','GradObj','on', 'Display', 'iter');
-C = 8;
-func = @(x) reg_LL(traindata, x, C);
-x = fminunc(func, x0, options);
-
-% test Params
-[acc, confMatrixMF, confMatrixFM] = test_sa(testdata, x);
+for C = 10:10
+    func = @(x) reg_LL(traindata, x, C);
+    x = fminunc(func, x0, options);
+    
+    % test Params
+    [ncorr, confMatrixMF, confMatrixFM] = roc(testdata, x);
+end
 
 % user parameters:
 userParams = [users';x']';

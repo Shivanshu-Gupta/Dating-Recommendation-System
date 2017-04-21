@@ -31,6 +31,7 @@ bool comp(const int &u1, const int &u2) {
     return (users[u1].indeg + users[u1].outdeg) > (users[u2].indeg + users[u2].outdeg);
 }
 
+// select most connected users from the dataset.
 void selectUsers(string in) {
     ifstream fin(in);
     string line;
@@ -75,18 +76,17 @@ void selectUsers(string in) {
     sort(females.begin(), females.end(), comp);
     int count = 1;
     int maleCount = 1, femaleCount = 1;
-    for(int i = 0; i < 0.01 * float(males.size()); i++) {
+    for(int i = 0; i < 0.5 * float(males.size()); i++) {
         selected[males[i]] = count++;
         selectedMales[males[i]] = maleCount++;
     }
-    for(int i = 0; i < 0.01 * float(females.size()); i++) {
+    for(int i = 0; i < 0.5 * float(females.size()); i++) {
         selected[females[i]] = count++;
         selectedFemales[females[i]] = femaleCount++;
     }
     cout<<"# males selected: "<<selectedMales.size()<<endl;
     cout<<"# females selected: "<<selectedFemales.size()<<endl;
 }
-
 
 
 void getTrain(string in, string out) {
@@ -132,6 +132,8 @@ void readBucketData(string bucketfile) {
     }
 }
 
+
+// use the actions with the most connected users to create train and test set.
 void getTrainTest(string datafile, string trainfile, string testfile) {
     selectUsers(datafile);
     readBucketData("userId_Gender_Bucket.csv");
@@ -243,7 +245,7 @@ void convertData(string in, string out) {
 }
 
 int main() {
-    getTrainTest("../data/train1.txt", "../data/train.csv", "../data/test.csv");
+    getTrainTest("../data/train2.txt", "../data/train.csv", "../data/test.csv");
     // getRatingMatrix("../data/train1.txt", "../output/mfmatrix.csv", "../output/fmmatrix.csv");
     // convertData("../data/outf4.txt", "../data/train1.csv");
 }
