@@ -1,4 +1,7 @@
-function [cm] = test_sa(data, x, theta, thresholds)
+function [maxfscore, bestCM, bestThreshold] = test_sa(data, x, theta, thresholds)
+%   Test on a particular dataset and for given list of thresholds
+%   Return the maximum Fscore, and the corresponding CM and threshold
+
     m = length(data);
     % confusion matrices - actual in rows and predicted in columns
     cm = zeros(2, 2, length(thresholds));
@@ -17,3 +20,9 @@ function [cm] = test_sa(data, x, theta, thresholds)
             cm(action+1, pred+1, j) = cm(action+1, pred+1, j) + 1;
         end
     end    
+    
+    %     beta = 0.5;
+    [precision, recall, fpr, fscores] = metrics(cm, 0.5);
+    [maxfscore, maxidx] = max(fscores);
+    bestCM = cm(:, :, maxidx);
+    bestThreshold = thresholds(maxidx);

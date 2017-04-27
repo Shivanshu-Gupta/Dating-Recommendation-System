@@ -1,7 +1,7 @@
 % Driver code for SA Model v3
 
-traindataFM = csvread('../data/trainFM2.csv');
-testdataFM = csvread('../data/testFM2.csv');
+traindataFM = csvread('../data/trainFM3.csv');
+testdataFM = csvread('../data/testFM3.csv');
 m = length(traindataFM);
 % data format: 
 % 1, 2: user indexes
@@ -22,7 +22,7 @@ x0FM = -1 + 2 * rand([n, 1]);
 options = optimoptions('fminunc','Algorithm','trust-region','GradObj','on', 'Hessian', 'on', 'Display', 'iter');
 
 C = 2;
-theta = [-1 -1 0];
+theta = [-50 -50 0];
 % Female -> Male
 func = @(x) reg_LL(traindataFM(:, 1:3), x, C, theta);
 xFM = fminunc(func, x0FM, options);

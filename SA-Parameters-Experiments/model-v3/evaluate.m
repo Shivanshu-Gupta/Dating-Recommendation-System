@@ -1,4 +1,7 @@
-function [params, threshold, maxfscore] = evaluate(traindataFM, valdataFM, C, theta)
+function [params, maxfscore, bestcm, bestthreshold] = evaluate(traindataFM, valdataFM, C, theta)
+%   Learn parameters on a train dataset and 
+%   return results of validation on validation dataset.
+    
     m = length(traindataFM);
     % data format: 
     % 1, 2: user indexes
@@ -21,16 +24,7 @@ function [params, threshold, maxfscore] = evaluate(traindataFM, valdataFM, C, th
     % Female -> Male
     func = @(x) reg_LL(traindataFM(:, 1:3), x, C, theta);
     xFM = fminunc(func, x0FM, options);
-    
-    thresholds = linspace(0, 0.4, 41);
-    [cmFM] = test_sa(valdataFM, xFM, theta, thresholds);
-    tp = cmFM(2, 2, :);
-    fp = cmFM(1, 2, :);
-    fn = cmFM(2, 1, :);
-    precision = tp ./ (tp + fp);
-    recall = tp ./ (tp + fn);
-%     beta = 0.5;
     params = {xFM};
-    fscores = (1.5 .* precision .* recall) ./ (0.5*precision + recall);
-    [maxfscore, maxidx] = max(fscores);
-    threshold = thresholds(maxidx);
+
+    thresholds = linspace(0, 0.4, 41);
+    [maxfscore, bestcm, bestthreshold] = test_sa(valdataFM, xFM, theta, thresholds);    
