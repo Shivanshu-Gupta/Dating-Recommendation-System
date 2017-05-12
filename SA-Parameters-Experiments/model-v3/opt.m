@@ -10,8 +10,8 @@ m = length(traindataFM);
 % 6, 7: user ids
 
 % unique users
-[femaleids, ia] = unique(traindataFM(:, 1));
-[maleids, ib] = unique(traindataFM(:, 2));
+[femaleidx, ia] = unique(traindataFM(:, 1));
+[maleidx, ib] = unique(traindataFM(:, 2));
 users = [traindataFM(ia, [1, 4, 6]); traindataFM(ib, [2, 5, 7])];
 n = length(users);
 
@@ -30,12 +30,14 @@ xFM = fminunc(func, x0FM, options);
 
 % user parameters:
 males = users(:, 2) == 1;
-maleParams = [users(males, 3)'; xFM(males)']';
+maleidx = users(males, 1);
+maleParams = [maleidx'; users(males, 3)'; xFM(maleidx)']';
 females = users(:, 2) == 0;
-femaleParams = [users(females, 3)'; xFM(females)']';
+femaleidx = users(females, 1);
+femaleParams = [femaleidx'; users(females, 3)'; xFM(femaleidx)']';
 
 % stats
-male_mean = mean(maleParams(:, 2));
-female_mean = mean(femaleParams(:, 2));
-male_std = std(maleParams(:, 2));
-female_std = std(femaleParams(:, 2));
+male_mean = mean(maleParams(:, 3));
+female_mean = mean(femaleParams(:, 3));
+male_std = std(maleParams(:, 3));
+female_std = std(femaleParams(:, 3));

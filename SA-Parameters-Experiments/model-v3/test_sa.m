@@ -1,4 +1,4 @@
-function [maxfscore, bestCM, bestThreshold] = test_sa(data, x, theta, thresholds)
+function [maxfscore, bestcm, bestthreshold] = test_sa(data, x, theta, thresholds)
 %   Test on a particular dataset and for given list of thresholds
 %   Return the maximum Fscore, and the corresponding CM and threshold
 
@@ -24,5 +24,5 @@ function [maxfscore, bestCM, bestThreshold] = test_sa(data, x, theta, thresholds
     %     beta = 0.5;
     [precision, recall, fpr, fscores] = metrics(cm, 0.5);
     [maxfscore, maxidx] = max(fscores);
-    bestCM = cm(:, :, maxidx);
-    bestThreshold = thresholds(maxidx);
+    bestcm = cm(:, :, maxidx);
+    bestthreshold = thresholds(maxidx);

@@ -35,8 +35,8 @@ function [acc, cm, precision, recall] = pr(data, x, theta)
     recall = tp ./ (tp + fn);
     acc = ncorr / m;
     
-    plot(recall, precision, '-o');
-    text(recall, precision, num2str(thresholds'));
-    legend('Precision-Recall','Location','east');
-    ylabel('Precision');
-    xlabel('Recall');
+%     plot(recall, precision, '-o');
+% %     text(recall, precision, num2str(thresholds'));
+%     legend('Precision-Recall','Location','east');
+%     ylabel('Precision');
+%     xlabel('Recall');

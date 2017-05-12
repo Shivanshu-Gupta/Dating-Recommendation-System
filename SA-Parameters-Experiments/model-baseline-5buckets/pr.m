@@ -1,4 +1,4 @@
-function [acc, cm, precision, recall] = pr(data, x, likeprob)
+function [acc, cm, precision, recall] = pr(data, b, likeprob)
 %   fpr = fp / (tn + fp) = fp / actual -ves = fall-out = 1 - specificity
 %   tpr = tp / (tp + fn) = tp / actual +ves = sensitivity, recall
 %   precision = tp / (tp + fp) = tp / predicted +ves
@@ -14,9 +14,12 @@ function [acc, cm, precision, recall] = pr(data, x, likeprob)
         line = data(i, :);
         u1 = line(1);
         u2 = line(2);
-        b1 = x(u1);
-        b2 = x(u2);
+        b1 = b(u1);
+        b2 = b(u2);
         p = likeprob(b1, b2);
+%         [p1, b1] = max(x(u1, :));
+%         [p2, b2] = max(x(u2, :));
+%         p = x(u1, :) * likeprob * x(u2)';
         
         action = line(3);
         for j = 1:k
@@ -35,8 +38,8 @@ function [acc, cm, precision, recall] = pr(data, x, likeprob)
     recall = tp ./ (tp + fn);
     acc = ncorr / m;
     
-    plot(recall, precision, '-o');
-    text(recall, precision, num2str(thresholds'));
-    legend('Precision-Recall','Location','east');
+    plot(recall, precision, '-*');
+%     text(recall, precision, num2str(thresholds'));
+%     legend('Precision-Recall','Location','east');
     ylabel('Precision');
     xlabel('Recall');

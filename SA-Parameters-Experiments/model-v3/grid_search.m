@@ -1,6 +1,6 @@
-traindataFM = csvread('../data/trainFM3.csv');
-valdataFM = csvread('../data/valFM3.csv');
-testdataFM = csvread('../data/testFM3.csv');
+traindataFM = csvread('../data/trainFM4.csv');
+valdataFM = csvread('../data/valFM4.csv');
+testdataFM = csvread('../data/testFM4.csv');
 m = length(traindataFM);
 
 C = 2;

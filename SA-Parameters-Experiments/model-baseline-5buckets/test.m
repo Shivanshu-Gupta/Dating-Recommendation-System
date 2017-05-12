@@ -1,4 +1,4 @@
-function [cm, maxfscore, threshold] = test(data, x, thresholds, likeprob)
+function [maxfscore, bestcm, bestthreshold] = test(data, b, thresholds, likeprob)
     m = length(data);
     % confusion matrices - actual in rows and predicted in columns
     cm = zeros(2, 2, length(thresholds));
@@ -7,9 +7,14 @@ function [cm, maxfscore, threshold] = test(data, x, thresholds, likeprob)
         line = data(i, :);
         u1 = line(1);
         u2 = line(2);
-        b1 = x(u1);
-        b2 = x(u2);
+
+        b1 = b(u1);
+        b2 = b(u2);
         p = likeprob(b1, b2);
+%         [p1, b1] = max(x(u1, :));
+%         [p2, b2] = max(x(u2, :));
+%         p = x(u1, :) * likeprob * x(u2)';
+
         action = line(3);
         for j = 1:length(thresholds)
             threshold = thresholds(j);
@@ -18,12 +23,7 @@ function [cm, maxfscore, threshold] = test(data, x, thresholds, likeprob)
         end
     end    
     
-    tp = cm(2, 2, :);
-    fp = cm(1, 2, :);
-    fn = cm(2, 1, :);
-    precision = tp ./ (tp + fp);
-    recall = tp ./ (tp + fn);
-    %     beta = 0.5;
-    fscores = (1.5 .* precision .* recall) ./ (0.5*precision + recall);
+    [precision, recall, fpr, fscores] = metrics(cm, 0.5);
     [maxfscore, maxidx] = max(fscores);
-    threshold = thresholds(maxidx);
+    bestcm = cm(:, :, maxidx);
+    bestthreshold = thresholds(maxidx);

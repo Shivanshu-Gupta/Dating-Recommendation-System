@@ -1,4 +1,4 @@
-function [f, g, h] = reg_LL(data, x, C, theta)
+function [f, g, h] = LLWithPrior(data, x, mean, std, C, theta)
 %   computes objective function and it's gradient with 
 %   given parameters.
 %   objective function = - (log-likelihood - regularizer)
@@ -48,7 +48,7 @@ function [f, g, h] = reg_LL(data, x, C, theta)
     end
     
     % add regularizer
-    f = f + C * sum((x .* x));
-    g = g + 2 * C * x;
-    h = h + 2 * C * eye(size(h));
+    f = f + C * sum(((x - mean).^2)./std);
+    g = g + 2 * C * ((x - mean) ./ std);
+    h = h + 2 * C * diag(1 ./ std);
 %      disp(-f);

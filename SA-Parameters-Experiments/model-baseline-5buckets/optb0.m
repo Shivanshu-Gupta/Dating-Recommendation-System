@@ -15,18 +15,23 @@ m = length(traindataFM);
 % 8, 9: true buckets
 
 % unique users
-[femaleids, ia] = unique(traindataFM(:, 1));
-[maleids, ib] = unique(traindataFM(:, 2));
+[femaleidx, ia] = unique(traindataFM(:, 1));
+[maleidx, ib] = unique(traindataFM(:, 2));
 users = [traindataFM(ia, [1, 4, 6, 8]); traindataFM(ib, [2, 5, 7, 9])];
+
 % sort the users by index
-[ids, I] = sort(users(:,1));
-users = users(I, :);
+[ids, order] = sort(users(:,1));
+users = users(order, :);
 
 % learn buckets
 n = length(users);
 x0 = 0.2 * ones(n, 5);
-[x, b] = learn_buckets(x0, traindataFM, likeprob);
+[x, blearnt] = learn_buckets_b2(x0, traindataFM, likeprob);
+bgold = zeros([n,1]);
+bgold(femaleidx) = users(femaleidx, 4);
+bgold(maleidx) = users(maleidx, 4);
+bgold(bgold == 0) = blearnt(bgold == 0);
 
 % testing
 thresholds = linspace(0, 0.4, 41);
-[cm, fscore, threshold] = test(testdataFM, b, thresholds, likeprob);
+[maxfscore, bestcm, bestthreshold] = test(testdataFM, bgold, thresholds, likeprob);

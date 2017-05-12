@@ -1,4 +1,4 @@
-function [x, b] = learn_buckets(x, data, likeprob)
+function [x, b] = learn_buckets_b2(x, data, likeprob)
     m = length(data);
     for k = 1:10
         for i = 1:m
